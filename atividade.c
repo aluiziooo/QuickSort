@@ -53,7 +53,7 @@ int main(int argc, char const *argv[])
 
 	//SE RETORNAR 0 ARQUIVO NÃO SE XISTIR
 	if(qtd < 0){
-		printf("\nAquivo não encontrado\n");
+		printf("\nAquivo não encontrado!\n\n");
 		exit(1);
 	}
 
@@ -62,6 +62,12 @@ int main(int argc, char const *argv[])
 
 	//PASSO O VETOR E O NOME DO ARQUIVO
 	alunos = lerArquivo(alunos,argv);
+
+	if (alunos == NULL)
+	{
+		printf("\nArquivo vazio!\n\n");
+		exit(1);
+	}
 
 	//CHAMO QUICK
 	quick_sort(alunos, 0,qtd-1);
@@ -89,7 +95,7 @@ t_aluno *lerArquivo(t_aluno *alunos, const char **argv){
 	FILE *arq;
 	arq = fopen(argv[1],"r");
 	if(arq == NULL){
-		return 0;
+		printf("Impossivel de abrir arquivo\n" );
 	}
 	
 	char info[100];
@@ -105,6 +111,9 @@ t_aluno *lerArquivo(t_aluno *alunos, const char **argv){
 		token = strtok(NULL,", ");
 		strcpy(alunos[i].idade,token);
 		i++;
+	}
+	if(i == 0){
+		return NULL;
 	}
 
 	fclose(arq);
